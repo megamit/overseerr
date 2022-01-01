@@ -2,7 +2,7 @@ import { getClientIp } from '@supercharge/request-ip';
 import { TypeormStore } from 'connect-typeorm/out';
 import cookieParser from 'cookie-parser';
 import csurf from 'csurf';
-import express, { NextFunction, Request, Response } from 'express';
+import express, { NextFunction, Request, Response, Router } from 'express';
 import * as OpenApiValidator from 'express-openapi-validator';
 import session, { Store } from 'express-session';
 import next from 'next';
@@ -33,8 +33,15 @@ const API_SPEC_PATH = path.join(__dirname, '../overseerr-api.yml');
 
 logger.info(`Starting Overseerr version ${getAppVersion()}`);
 const dev = process.env.NODE_ENV !== 'production';
+const basePath = process.env.BASE_PATH || '';
+
 const app = next({ dev });
 const handle = app.getRequestHandler();
+
+if (basePath) {
+  logger.debug(`Serving from BASE_PATH ${basePath}`);
+  app.setAssetPrefix(basePath + '/');
+}
 
 app
   .prepare()
@@ -131,7 +138,9 @@ app
 
     // Set up sessions
     const sessionRespository = getRepository(Session);
-    server.use(
+    const apiRoutes = Router();
+    server.use(basePath || '/', apiRoutes);
+    apiRoutes.use(
       '/api',
       session({
         secret: settings.clientId,
@@ -150,8 +159,8 @@ app
       })
     );
     const apiDocs = YAML.load(API_SPEC_PATH);
-    server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(apiDocs));
-    server.use(
+    apiRoutes.use('/api-docs', swaggerUi.serve, swaggerUi.setup(apiDocs));
+    apiRoutes.use(
       OpenApiValidator.middleware({
         apiSpec: API_SPEC_PATH,
         validateRequests: true,
@@ -162,15 +171,15 @@ app
      * OpenAPI validator. Otherwise, they are treated as objects instead of strings
      * and response validation will fail
      */
-    server.use((_req, res, next) => {
+    apiRoutes.use((_req, res, next) => {
       const original = res.json;
       res.json = function jsonp(json) {
         return original.call(this, JSON.parse(JSON.stringify(json)));
       };
       next();
     });
-    server.use('/api/v1', routes);
-    server.get('*', (req, res) => handle(req, res));
+    apiRoutes.use('/api/v1', routes);
+    apiRoutes.get('*', (req, res) => handle(req, res));
     server.use(
       (
         err: { status: number; message: string; errors: string[] },

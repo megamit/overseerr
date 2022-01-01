@@ -14,7 +14,6 @@ import {
 import { hasFlag } from 'country-flag-icons';
 import 'country-flag-icons/3x2/flags.css';
 import { uniqBy } from 'lodash';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useMemo, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
@@ -41,6 +40,7 @@ import PageTitle from '../Common/PageTitle';
 import PlayButton, { PlayButtonLink } from '../Common/PlayButton';
 import ExternalLinkBlock from '../ExternalLinkBlock';
 import IssueModal from '../IssueModal';
+import Link from '../Link';
 import ManageSlideOver from '../ManageSlideOver';
 import MediaSlider from '../MediaSlider';
 import PersonCard from '../PersonCard';

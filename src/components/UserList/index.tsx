@@ -9,7 +9,6 @@ import {
 } from '@heroicons/react/solid';
 import axios from 'axios';
 import { Field, Form, Formik } from 'formik';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
@@ -22,6 +21,7 @@ import useSettings from '../../hooks/useSettings';
 import { useUpdateQueryParams } from '../../hooks/useUpdateQueryParams';
 import { Permission, User, UserType, useUser } from '../../hooks/useUser';
 import globalMessages from '../../i18n/globalMessages';
+import baseUrl from '../../utils/baseUrl';
 import Alert from '../Common/Alert';
 import Badge from '../Common/Badge';
 import Button from '../Common/Button';
@@ -31,6 +31,7 @@ import Modal from '../Common/Modal';
 import PageTitle from '../Common/PageTitle';
 import SensitiveInput from '../Common/SensitiveInput';
 import Table from '../Common/Table';
+import Link from '../Link';
 import Transition from '../Transition';
 import BulkEditModal from './BulkEditModal';
 
@@ -653,8 +654,8 @@ const UserList: React.FC = () => {
                   className="mr-2"
                   onClick={() =>
                     router.push(
-                      '/users/[userId]/settings',
-                      `/users/${user.id}/settings`
+                      baseUrl('/users/[userId]/settings'),
+                      baseUrl(`/users/${user.id}/settings`)
                     )
                   }
                 >

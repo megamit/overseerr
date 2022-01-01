@@ -1,5 +1,4 @@
 import { ArrowCircleRightIcon } from '@heroicons/react/outline';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
@@ -16,6 +15,7 @@ import ImageFader from '../Common/ImageFader';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import PageTitle from '../Common/PageTitle';
 import ProgressCircle from '../Common/ProgressCircle';
+import Link from '../Link';
 import RequestCard from '../RequestCard';
 import Slider from '../Slider';
 import ProfileHeader from './ProfileHeader';

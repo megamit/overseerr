@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { UrlObject } from 'url';
 import { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import baseUrl from '../utils/baseUrl';
 import useDebouncedState from './useDebouncedState';
 import { useRouter } from 'next/router';
 import type { Nullable } from '../utils/typeHelpers';
@@ -49,7 +50,7 @@ const useSearchInput = (): SearchObject => {
    */
   useEffect(() => {
     if (debouncedValue !== '') {
-      if (router.pathname.startsWith('/search')) {
+      if (router.pathname.startsWith(baseUrl('/search'))) {
         router.replace({
           pathname: router.pathname,
           query: {
@@ -61,7 +62,7 @@ const useSearchInput = (): SearchObject => {
         setLastRoute(router.asPath);
         router
           .push({
-            pathname: '/search',
+            pathname: baseUrl('/search'),
             query: { query: encodeURIExtraParams(debouncedValue) },
           })
           .then(() => window.scrollTo(0, 0));
@@ -78,13 +79,13 @@ const useSearchInput = (): SearchObject => {
   useEffect(() => {
     if (
       searchValue === '' &&
-      router.pathname.startsWith('/search') &&
+      router.pathname.startsWith(baseUrl('/search')) &&
       !searchOpen
     ) {
       if (lastRoute) {
         router.push(lastRoute).then(() => window.scrollTo(0, 0));
       } else {
-        router.replace('/').then(() => window.scrollTo(0, 0));
+        router.replace(baseUrl('/')).then(() => window.scrollTo(0, 0));
       }
     }
   }, [searchOpen]);
@@ -112,12 +113,15 @@ const useSearchInput = (): SearchObject => {
           : ''
       );
 
-      if (!router.pathname.startsWith('/search') && !router.query.query) {
+      if (
+        !router.pathname.startsWith(baseUrl('/search')) &&
+        !router.query.query
+      ) {
         setIsOpen(false);
       }
     }
 
-    if (router.pathname.startsWith('/search')) {
+    if (router.pathname.startsWith(baseUrl('/search'))) {
       setIsOpen(true);
     }
   }, [router, setSearchValue]);

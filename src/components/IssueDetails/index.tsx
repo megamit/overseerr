@@ -8,7 +8,6 @@ import {
 import { RefreshIcon } from '@heroicons/react/solid';
 import axios from 'axios';
 import { Field, Form, Formik } from 'formik';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { defineMessages, FormattedRelativeTime, useIntl } from 'react-intl';
@@ -23,6 +22,7 @@ import type { TvDetails } from '../../../server/models/Tv';
 import { Permission, useUser } from '../../hooks/useUser';
 import globalMessages from '../../i18n/globalMessages';
 import Error from '../../pages/_error';
+import baseUrl from '../../utils/baseUrl';
 import Badge from '../Common/Badge';
 import Button from '../Common/Button';
 import CachedImage from '../Common/CachedImage';
@@ -30,6 +30,7 @@ import LoadingSpinner from '../Common/LoadingSpinner';
 import Modal from '../Common/Modal';
 import PageTitle from '../Common/PageTitle';
 import { issueOptions } from '../IssueModal/constants';
+import Link from '../Link';
 import Transition from '../Transition';
 import IssueComment from './IssueComment';
 import IssueDescription from './IssueDescription';
@@ -153,7 +154,7 @@ const IssueDetails: React.FC = () => {
         appearance: 'success',
         autoDismiss: true,
       });
-      router.push('/issues');
+      router.push(baseUrl('/issues'));
     } catch (e) {
       addToast(intl.formatMessage(messages.toastissuedeletefailed), {
         appearance: 'error',

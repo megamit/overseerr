@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import useSWR, { mutate } from 'swr';
 import useLocale from '../../hooks/useLocale';
+import baseUrl from '../../utils/baseUrl';
 import AppDataWarning from '../AppDataWarning';
 import Badge from '../Common/Badge';
 import Button from '../Common/Button';
@@ -47,7 +48,7 @@ const Setup: React.FC = () => {
       await axios.post('/api/v1/settings/main', { locale });
       mutate('/api/v1/settings/public');
 
-      router.push('/');
+      router.push(baseUrl('/'));
     }
   };
 
@@ -72,7 +73,7 @@ const Setup: React.FC = () => {
       </div>
       <div className="relative z-40 px-4 sm:mx-auto sm:w-full sm:max-w-4xl">
         <img
-          src="/logo_stacked.svg"
+          src={baseUrl('/logo_stacked.svg')}
           className="max-w-full mb-10 sm:max-w-md sm:mx-auto"
           alt="Logo"
         />

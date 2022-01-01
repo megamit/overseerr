@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import baseUrl from '../utils/baseUrl';
 import { Permission, PermissionCheckOptions, useUser } from './useUser';
 
 const useRouteGuard = (
@@ -11,7 +12,7 @@ const useRouteGuard = (
 
   useEffect(() => {
     if (user && !hasPermission(permission, options)) {
-      router.push('/');
+      router.push(baseUrl('/'));
     }
   }, [user, permission, router, hasPermission, options]);
 };

@@ -4,7 +4,6 @@ import {
   FilterIcon,
   SortDescendingIcon,
 } from '@heroicons/react/solid';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
@@ -17,6 +16,7 @@ import Button from '../Common/Button';
 import Header from '../Common/Header';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import PageTitle from '../Common/PageTitle';
+import Link from '../Link';
 import RequestItem from './RequestItem';
 
 const messages = defineMessages({

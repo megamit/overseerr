@@ -6,12 +6,13 @@ import {
   UsersIcon,
   XIcon,
 } from '@heroicons/react/outline';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ReactNode, useRef } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import useClickOutside from '../../../hooks/useClickOutside';
 import { Permission, useUser } from '../../../hooks/useUser';
+import baseUrl from '../../../utils/baseUrl';
+import Link from '../../Link';
 import Transition from '../../Transition';
 import VersionStatus from '../VersionStatus';
 
@@ -131,7 +132,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setClosed }) => {
                     <div className="flex items-center flex-shrink-0 px-2">
                       <span className="px-4 text-xl text-gray-50">
                         <a href="/">
-                          <img src="/logo_full.svg" alt="Logo" />
+                          <img src={baseUrl('/logo_full.svg')} alt="Logo" />
                         </a>
                       </span>
                     </div>
@@ -200,7 +201,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setClosed }) => {
               <div className="flex items-center flex-shrink-0">
                 <span className="px-4 text-2xl text-gray-50">
                   <a href="/">
-                    <img src="/logo_full.svg" alt="Logo" />
+                    <img src={baseUrl('/logo_full.svg')} alt="Logo" />
                   </a>
                 </span>
               </div>

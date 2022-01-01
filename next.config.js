@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   env: {
     commitTag: process.env.COMMIT_TAG || 'local',
   },
@@ -15,3 +15,20 @@ module.exports = {
     return config;
   },
 };
+
+if (process.env.BASE_PATH) {
+  config.rewrites = async () => ({
+    beforeFiles: [
+      /* Strip off base path for serving pages */
+      {
+        source: process.env.BASE_PATH + '/:path*',
+        destination: '/:path*',
+      },
+    ],
+  });
+
+  config.publicRuntimeConfig = {
+    basePath: process.env.BASE_PATH,
+  };
+}
+module.exports = config;

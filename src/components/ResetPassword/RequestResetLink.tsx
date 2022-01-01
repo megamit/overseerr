@@ -1,19 +1,20 @@
 import { ArrowLeftIcon, MailIcon } from '@heroicons/react/solid';
 import axios from 'axios';
 import { Field, Form, Formik } from 'formik';
-import Link from 'next/link';
 import React, { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import * as Yup from 'yup';
+import baseUrl from '../../utils/baseUrl';
 import Button from '../Common/Button';
 import ImageFader from '../Common/ImageFader';
 import PageTitle from '../Common/PageTitle';
 import LanguagePicker from '../Layout/LanguagePicker';
+import Link from '../Link';
 
 const messages = defineMessages({
   passwordreset: 'Password Reset',
   resetpassword: 'Reset your password',
-  emailresetlink: 'Email Recovery Link',
+  emailresetlink: 'Email Recovery WrappedLink',
   email: 'Email Address',
   validationemailrequired: 'You must provide a valid email address',
   gobacklogin: 'Return to Sign-In Page',
@@ -49,7 +50,11 @@ const ResetPassword: React.FC = () => {
         <LanguagePicker />
       </div>
       <div className="relative z-40 flex flex-col items-center px-4 mt-10 sm:mx-auto sm:w-full sm:max-w-md">
-        <img src="/logo_stacked.svg" className="max-w-full mb-10" alt="Logo" />
+        <img
+          src={baseUrl('/logo_stacked.svg')}
+          className="max-w-full mb-10"
+          alt="Logo"
+        />
         <h2 className="mt-2 text-3xl font-extrabold leading-9 text-center text-gray-100">
           {intl.formatMessage(messages.resetpassword)}
         </h2>
